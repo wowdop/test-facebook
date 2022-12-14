@@ -19,8 +19,19 @@ export default function handleRequest(
   )
 
   const styleList = zaSheet.getStyleTags()
+  zaSheet.seal()
 
-  markup = markup.replace('__WOW_JOB_DEV_STYLE__', styleList)
+  try {
+    markup = markup.replace('__WOW_JOB_DEV_STYLE__', styleList)
+  } catch (error: any) {
+    console.error('message *****************')
+    console.error('message *****************')
+    console.error('message *****************')
+    console.error('message *****************')
+    console.error('message *****************')
+    console.error('message *****************')
+    console.error('entry server', error.message)
+  }
   // console.log('styleList', styleList)
 
   responseHeaders.set('Content-Type', 'text/html')

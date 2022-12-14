@@ -10,6 +10,7 @@ import {
 import href from './test.css'
 
 import styled from 'styled-components'
+import { createContext } from 'react'
 
 export const links: LinksFunction = () => [
   {
@@ -27,6 +28,7 @@ export const meta: MetaFunction = () => ({
 const Layout = styled.div`
   border: 10px dashed rebeccapurple;
 `
+const CTX = createContext<null | string>(null)
 
 export default function App() {
   return (
@@ -34,7 +36,7 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        {typeof document === 'undefined' ? '__WOW_JOB_DEV_STYLE__' : null}
+        {typeof document === 'undefined' ? '__WOW_JOB_DEV_STYLE__' : ''}
       </head>
       <body>
         <Layout>
