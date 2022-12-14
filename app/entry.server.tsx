@@ -3,6 +3,8 @@ import { RemixServer } from '@remix-run/react'
 import { renderToString } from 'react-dom/server'
 
 import { ServerStyleSheet } from 'styled-components'
+import { createContext } from 'react'
+import { CTX } from './context'
 
 export default function handleRequest(
   request: Request,
@@ -14,7 +16,9 @@ export default function handleRequest(
 
   let markup = renderToString(
     zaSheet.collectStyles(
-      <RemixServer context={remixContext} url={request.url} />
+      <CTX.Provider value={null}>
+        <RemixServer context={remixContext} url={request.url} />
+      </CTX.Provider>
     )
   )
 
@@ -22,14 +26,13 @@ export default function handleRequest(
   zaSheet.seal()
 
   try {
-    markup = markup.replace('__WOW_JOB_DEV_STYLE__', styleList)
+    // markup = markup.replace('__WOW_JOB_DEV_STYLE__', styleList)
+    markup = renderToString(
+      <CTX.Provider value={styleList}>
+        <RemixServer context={remixContext} url={request.url} />
+      </CTX.Provider>
+    )
   } catch (error: any) {
-    console.error('message *****************')
-    console.error('message *****************')
-    console.error('message *****************')
-    console.error('message *****************')
-    console.error('message *****************')
-    console.error('message *****************')
     console.error('entry server', error.message)
   }
   // console.log('styleList', styleList)
